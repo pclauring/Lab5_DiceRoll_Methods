@@ -6,13 +6,14 @@ namespace Lab5_DiceRolling_Random
     {
         static void Main(string[] args)
         {
-            bool begin = true;
-
+            //Get the username
             Console.Write("Welcome to the Casino!\nWhat is your name? ");
             string yourName = Console.ReadLine();
-            do
-            {
 
+
+            while (true) //to make sure the user wants to play or exit 
+            {
+                //Ask user if they want to play
                 Console.WriteLine($"{yourName} would you like to roll some dice (y/n)? ");
                 bool enterCasino = GetYesorNo();
                 if (enterCasino == false)
@@ -22,14 +23,18 @@ namespace Lab5_DiceRolling_Random
 
                 while (enterCasino)
                 {
-
+                    //get prompt user for input for sides on dice
                     Console.Write("Entering the Dice Roller!\nPlease enter the number of sides on your dice: ");
 
                     bool repeat = true;
+
+                    //get valid input
                     int input = GetInt(yourName);
 
                     while (repeat)
                     {
+
+                    //Loop for rolling selected dice must exit to choose new dice
                         Random generator = new Random();
                         int diceRoll1 = generator.Next(input) + 1;
                         int diceRoll2 = generator.Next(input) + 1;
@@ -46,21 +51,22 @@ namespace Lab5_DiceRolling_Random
                         int diceTotal = diceRoll1 + diceRoll2;
                         if (diceTotal == 7 || diceTotal == 11)
                         {
-                            Console.WriteLine($"You rolled a natural {diceTotal} in craps");
+                            Console.WriteLine($"You rolled a natural {diceTotal} in craps!!");
                         }
 
                         if (diceRoll1 == 6 && diceRoll2 == 6)
                         {
-                            Console.WriteLine("BOX CARS");
+                            Console.WriteLine("BOX CARS!!!");
                         }
 
-                        Console.Write("Would you like to roll the dice again (y/n)? ");
+                        //Prompt user for another roll
+                        Console.Write($"{yourName} you like to roll the same dice again (y/n)? ");
                         repeat = GetYesorNo();
                         enterCasino = false;
                     }
 
                 }
-            } while (begin);
+            } 
         }
 
         private static bool GetYesorNo()
@@ -97,11 +103,14 @@ namespace Lab5_DiceRolling_Random
 
             while (!valid)
             {
+
                 string sides = Console.ReadLine();
                 valid = int.TryParse(sides, out input);
+            }
+            if (!valid)
+            {
                 Console.WriteLine($"{name}... You didn't enter valid input. Try again: ");
             }
-
             return input;
         }
     }
